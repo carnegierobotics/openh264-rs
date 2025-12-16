@@ -660,7 +660,7 @@ pub const SPS_LISTING: EParameterSetStrategy = 2;
 pub const SPS_LISTING_AND_PPS_INCREASING: EParameterSetStrategy = 3;
 pub const SPS_PPS_LISTING: EParameterSetStrategy = 6;
 #[doc = " @brief Enumulate for the stategy of SPS/PPS strategy"]
-pub type EParameterSetStrategy = ::std::os::raw::c_uint;
+pub type EParameterSetStrategy = ::std::os::raw::c_int;
 #[doc = " @brief SVC Encoding Parameters"]
 #[repr(C)]
 #[derive(Debug, Copy, Clone, PartialOrd, PartialEq)]
@@ -750,7 +750,7 @@ pub struct TagEncParamExt {
     #[doc = "< only used when uiSliceMode=1 or 3, will change slicing of a picture during the run-time of multi-thread encoding, so the result of each run may be different"]
     pub bUseLoadBalancing: bool,
     #[doc = "< 0: on, 1: off, 2: on except for slice boundaries"]
-    pub iLoopFilterDisableIdc: ::std::os::raw::c_int,
+    pub iLoopFilterDisableIdc: ::std::os::raw::c_uint,
     #[doc = "< AlphaOffset: valid range [-6, 6], default 0"]
     pub iLoopFilterAlphaC0Offset: ::std::os::raw::c_int,
     #[doc = "< BetaOffset: valid range [-6, 6], default 0"]
@@ -893,7 +893,7 @@ pub type PFrameBSInfo = *mut SFrameBSInfo;
 #[derive(Debug, Copy, Clone, Hash, PartialOrd, Ord, PartialEq, Eq)]
 pub struct Source_Picture_s {
     #[doc = "< color space type"]
-    pub iColorFormat: ::std::os::raw::c_int,
+    pub iColorFormat: ::std::os::raw::c_uint,
     #[doc = "< stride for each plane pData"]
     pub iStride: [::std::os::raw::c_int; 4usize],
     #[doc = "< plane pData"]

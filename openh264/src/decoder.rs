@@ -224,7 +224,7 @@ impl DecoderConfig {
     ///
     /// See [this issue](https://github.com/ralfbiedert/openh264-rust/issues/10) for details.
     pub const unsafe fn num_threads(mut self, num_threads: u32) -> Self {
-        self.num_threads = num_threads as i32;
+        self.num_threads = num_threads;
         self
     }
 
@@ -344,14 +344,12 @@ impl Decoder {
         let flush = self.config.flush_after_decode.should_flush(options);
 
         unsafe {
-            self.raw_api
-                .decode_frame_no_delay(
-                    packet.as_ptr(),
-                    packet.len() as i32,
-                    from_mut(&mut dst).cast(),
-                    &raw mut buffer_info,
-                )
-                .ok()?;
+            self.raw_api.decode_frame_no_delay(
+                packet.as_ptr(),
+                packet.len() as i32,
+                from_mut(&mut dst).cast(),
+                &raw mut buffer_info,
+            );
         }
 
         match (buffer_info.iBufferStatus, flush) {
@@ -446,9 +444,7 @@ impl Decoder {
         let mut buffer_info = SBufferInfo::default();
 
         unsafe {
-            self.raw_api()
-                .flush_frame(from_mut(&mut dst).cast(), &raw mut buffer_info)
-                .ok()?;
+            self.raw_api().flush_frame(from_mut(&mut dst).cast(), &raw mut buffer_info);
             Ok((dst, buffer_info))
         }
     }

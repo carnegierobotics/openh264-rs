@@ -150,11 +150,11 @@ pub enum SpsPpsStrategy {
 impl SpsPpsStrategy {
     const fn to_c(self) -> RC_MODES {
         match self {
-            Self::ConstantId => openh264_sys2::CONSTANT_ID,
-            Self::IncreasingId => openh264_sys2::INCREASING_ID,
-            Self::SpsListing => openh264_sys2::SPS_LISTING,
-            Self::SpsListingAndPpsIncreasing => openh264_sys2::SPS_LISTING_AND_PPS_INCREASING,
-            Self::SpsPpsListing => openh264_sys2::SPS_PPS_LISTING,
+            Self::ConstantId => openh264_sys2::CONSTANT_ID as i32,
+            Self::IncreasingId => openh264_sys2::INCREASING_ID as i32,
+            Self::SpsListing => openh264_sys2::SPS_LISTING as i32,
+            Self::SpsListingAndPpsIncreasing => openh264_sys2::SPS_LISTING_AND_PPS_INCREASING as i32,
+            Self::SpsPpsListing => openh264_sys2::SPS_PPS_LISTING as i32,
         }
     }
 }
@@ -420,7 +420,7 @@ pub struct EncoderConfig {
     enable_skip_frame: bool,
     target_bitrate: BitRate,
     enable_denoise: bool,
-    debug: i32,
+    debug: u32,
     data_format: EVideoFormatType,
     max_frame_rate: FrameRate,
     rate_control_mode: RateControlMode,
@@ -839,7 +839,7 @@ impl<'a> EncodedBitStream<'a> {
     /// Frame type of the encoded packet.
     #[must_use]
     pub const fn frame_type(&self) -> FrameType {
-        FrameType::from_c_int(self.bit_stream_info.eFrameType)
+        FrameType::from_c_uint(self.bit_stream_info.eFrameType)
     }
 
     /// Number of layers in the encoded packet.
@@ -982,7 +982,7 @@ pub enum FrameType {
 }
 
 impl FrameType {
-    const fn from_c_int(native: std::os::raw::c_int) -> Self {
+    const fn from_c_uint(native: std::os::raw::c_uint) -> Self {
         use openh264_sys2::{videoFrameTypeI, videoFrameTypeIDR, videoFrameTypeIPMixed, videoFrameTypeP, videoFrameTypeSkip};
 
         #[allow(non_upper_case_globals)]

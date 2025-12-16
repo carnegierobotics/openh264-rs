@@ -86,7 +86,7 @@ impl Display for Error {
         f.write_str("OpenH264 encountered an error. Native:")?;
         <i64 as std::fmt::Display>::fmt(&self.native, f)?;
         f.write_str(". Decoding State:")?;
-        <std::os::raw::c_int as std::fmt::Display>::fmt(&self.decoding_state, f)?;
+        <std::os::raw::c_uint as std::fmt::Display>::fmt(&self.decoding_state, f)?;
         f.write_str(". User Message:")?;
         self.misc.fmt(f)?;
 
